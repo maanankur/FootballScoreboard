@@ -28,7 +28,7 @@ public class FootballScorboardUnitTest {
 	 * This is the test case for a match with invalid team name
 	 */
 	@Test
-	public void _01_invalidMatchNothing() {
+	public void _01_invalidMatch() {
 		assertEquals(0, footballService.getSummary().size());
 	}
 
