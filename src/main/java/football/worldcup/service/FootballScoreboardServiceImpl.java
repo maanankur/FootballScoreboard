@@ -40,4 +40,10 @@ public class FootballScoreboardServiceImpl<T extends FootballMatch> implements F
     	matches.add(match);
 	}
 
+	@Override
+	public void updateScore(T match) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

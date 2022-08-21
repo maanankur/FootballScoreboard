@@ -91,5 +91,28 @@ public class FootballScorboardUnitTest {
 
 		assertEquals(4, footballService.getSummary().size());
 	}
+	
+	/**
+	 * This is the test case to validate the initial score of a existing match
+	 */
+	@Test
+	public void _06_validateInitialScore() {
+		assertEquals((Integer)0, footballService.getSummary().get(0).getHomeTeamScore());
+		assertEquals((Integer)0, footballService.getSummary().get(0).getAwayTeamScore());
+	}
+	
+	/**
+	 * This is the test case to update valid score for a valid match 
+	 */
+	@Test
+	public void _07_updateValidMatch() {
+		FootballMatch m1 = new FootballMatch("Belgium", "Austrailia");
+		footballService.startNewGame(m1);
+		assertEquals(5, footballService.getSummary().size());
+		FootballMatch m2 = new FootballMatch("Belgium", "Austrailia", 6 , 7);
+		footballService.updateScore(m2);
+		assertEquals((Integer)6, footballService.getSummary().get(0).getHomeTeamScore());
+		assertEquals((Integer)7, footballService.getSummary().get(0).getAwayTeamScore());
+	}
 
 }
