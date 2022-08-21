@@ -9,6 +9,7 @@ import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 
+import football.worldcup.eceptions.InvalidScoreException;
 import football.worldcup.eceptions.MatchAlreadyExistException;
 import football.worldcup.eceptions.MatchNotExistException;
 import football.worldcup.model.FootballMatch;
@@ -137,7 +138,7 @@ public class FootballScorboardUnitTest {
 	public void _09_updateInvalidScores() {
 		String expectedMessage = "Invalid Scores to update";
 		FootballMatch m1 = new FootballMatch("Mexico", "Canada", null, 5);
-		Exception exception = assertThrows(Exception.class, () -> {
+		Exception exception = assertThrows(InvalidScoreException.class, () -> {
 			footballService.updateScore(m1);
 		});
 
@@ -145,7 +146,7 @@ public class FootballScorboardUnitTest {
 		assertTrue(actualMessage.equals(expectedMessage));
 		
 		FootballMatch m2 = new FootballMatch("Mexico", "Canada", -2, 5);
-		exception = assertThrows(Exception.class, () -> {
+		exception = assertThrows(InvalidScoreException.class, () -> {
 			footballService.updateScore(m2);
 		});
 
@@ -160,7 +161,7 @@ public class FootballScorboardUnitTest {
 	public void _10_updateNonAscendingScores() {
 		String expectedMessage = "Scores can not be decrease";
 		FootballMatch m1 = new FootballMatch("Belgium", "Austrailia", 4, 5);
-		Exception exception = assertThrows(Exception.class, () -> {
+		Exception exception = assertThrows(InvalidScoreException.class, () -> {
 			footballService.updateScore(m1);
 		});
 
