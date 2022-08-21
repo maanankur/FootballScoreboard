@@ -65,5 +65,31 @@ public class FootballScorboardUnitTest {
 		String actualMessage = exception.getMessage();
 		assertTrue(actualMessage.equals(expectedMessage));
 	}
+	
+	/**
+	 * This is the test case for one valid and other invalid match
+	 */
+	@Test
+	public void _04_validInvalidMatch() {
+		FootballMatch m1 = new FootballMatch("Itly", "Spain");
+		FootballMatch m2 = new FootballMatch(null, "Canada");
+		footballService.startNewGame(m1);
+		footballService.startNewGame(m2);
+
+		assertEquals(2, footballService.getSummary().size());
+	}
+
+	/**
+	 * This is the test case for two valid matches
+	 */
+	@Test
+	public void _05_validValidMatch() {
+		FootballMatch m1 = new FootballMatch("France", "Germany");
+		FootballMatch m2 = new FootballMatch("England", "Portugal");
+		footballService.startNewGame(m1);
+		footballService.startNewGame(m2);
+
+		assertEquals(4, footballService.getSummary().size());
+	}
 
 }
