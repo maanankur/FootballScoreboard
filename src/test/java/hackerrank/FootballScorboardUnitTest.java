@@ -169,4 +169,16 @@ public class FootballScorboardUnitTest {
 		assertTrue(actualMessage.equals(expectedMessage));
 	}
 	
+	/**
+	 * This is the test case to finish a in progress match.
+	 */
+	@Test
+	public void _11_finishMatch() {
+		FootballMatch m1 = new FootballMatch("Uruguay", "Brazil");
+		footballService.startNewGame(m1);
+		assertEquals(6, footballService.getSummary().size());
+		footballService.finishInProgressGame(m1);
+		assertEquals(5, footballService.getSummary().size());
+	}
+
 }

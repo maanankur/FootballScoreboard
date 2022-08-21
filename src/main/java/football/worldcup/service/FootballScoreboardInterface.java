@@ -15,6 +15,12 @@ public interface FootballScoreboardInterface<T> {
      * @param match a match to be added into in-memory collection.
     */
     public void startNewGame(final T match);
+    
+
+    /**
+     * @param match a currently in progress match to be finish.
+    */
+    public void finishInProgressGame(final FootballMatch match);
 
     /**
      * @param match a currently in progress match to update the score.
