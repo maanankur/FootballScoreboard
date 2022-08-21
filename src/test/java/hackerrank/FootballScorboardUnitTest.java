@@ -1,7 +1,6 @@
 package hackerrank;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -11,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 
 import football.worldcup.eceptions.MatchAlreadyExistException;
+import football.worldcup.eceptions.MatchNotExistException;
 import football.worldcup.model.FootballMatch;
 import football.worldcup.service.FootballScoreboardServiceImpl;
 
@@ -121,7 +121,7 @@ public class FootballScorboardUnitTest {
 	@Test
 	public void _08_updateInvalidMatch() {
 		FootballMatch match = new FootballMatch("Wales", "Denmark");
-		Exception exception = assertThrows(Exception.class, () -> {
+		Exception exception = assertThrows(MatchNotExistException.class, () -> {
 			footballService.updateScore(match);
 		});
 
