@@ -24,6 +24,7 @@ public class FootballScoreboardServiceImpl<T extends FootballMatch> implements F
 
 	@Override
 	public List<T> getSummary() {
+		Collections.sort(matches);
 		return matches;
 	}
 

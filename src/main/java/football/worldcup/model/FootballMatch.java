@@ -3,11 +3,13 @@ package football.worldcup.model;
 import java.sql.Timestamp;
 import java.util.Date;
 
+
+
 /**
  * The FootballMatch is model class for a football match
  * @author ankur.maan
  */
-public class FootballMatch{
+public class FootballMatch implements Comparable{
 	private String homeTeam;
 	private String awayTeam;
 	private Integer homeTeamScore;
@@ -112,5 +114,17 @@ public class FootballMatch{
 		} else if (!homeTeam.equalsIgnoreCase(other.homeTeam))
 			return false;
 		return true;
+	}
+
+	@Override
+	public int compareTo(Object obj) {
+		int sumCurrent = getHomeTeamScore() + getAwayTeamScore();
+		int sumPassed = ((FootballMatch) obj).getHomeTeamScore() + ((FootballMatch) obj).getAwayTeamScore();
+		if(sumCurrent > sumPassed)  
+			return -1;  
+		else if(sumCurrent < sumPassed)  
+			return 1;  
+		else
+			return -getStartTime().compareTo(((FootballMatch) obj).getStartTime()); 
 	}
 }
