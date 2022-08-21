@@ -130,4 +130,42 @@ public class FootballScorboardUnitTest {
 		assertTrue(actualMessage.equals(expectedMessage));
 	}
 	
+	/**
+	 * This is the test case to update the invalid scores for a valid match.
+	 */
+	@Test
+	public void _09_updateInvalidScores() {
+		String expectedMessage = "Invalid Scores to update";
+		FootballMatch m1 = new FootballMatch("Mexico", "Canada", null, 5);
+		Exception exception = assertThrows(Exception.class, () -> {
+			footballService.updateScore(m1);
+		});
+
+		String actualMessage = exception.getMessage();
+		assertTrue(actualMessage.equals(expectedMessage));
+		
+		FootballMatch m2 = new FootballMatch("Mexico", "Canada", -2, 5);
+		exception = assertThrows(Exception.class, () -> {
+			footballService.updateScore(m2);
+		});
+
+		actualMessage = exception.getMessage();
+		assertTrue(actualMessage.equals(expectedMessage));
+	}
+	
+	/**
+	 * This is the test case to update the non ascending scores for a valid match.  
+	 */
+	@Test
+	public void _10_updateNonAscendingScores() {
+		String expectedMessage = "Scores can not be decrease";
+		FootballMatch m1 = new FootballMatch("Belgium", "Austrailia", 4, 5);
+		Exception exception = assertThrows(Exception.class, () -> {
+			footballService.updateScore(m1);
+		});
+
+		String actualMessage = exception.getMessage();
+		assertTrue(actualMessage.equals(expectedMessage));
+	}
+	
 }
