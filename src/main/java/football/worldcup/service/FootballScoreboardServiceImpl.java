@@ -12,18 +12,25 @@ import football.worldcup.model.FootballMatch;
  */
 public class FootballScoreboardServiceImpl<T extends FootballMatch> implements FootballScoreboardInterface<T> {
     
+	private final List<T> matches;
 
+    /**
+     * Initialize a new list of Football matches.
+     */
+    public FootballScoreboardServiceImpl() {
+    	matches = new ArrayList<T>();
+    }
 
 	@Override
 	public List<T> getSummary() {
-		// TODO Auto-generated method stub
-		return null;
+		return matches;
 	}
 
 	@Override
 	public void startNewGame(T match) {
-		// TODO Auto-generated method stub
-		
+		String homeTeam = match.getHomeTeam();
+    	String awayTeam = match.getAwayTeam();
+    	matches.add(match);
 	}
 
 }
