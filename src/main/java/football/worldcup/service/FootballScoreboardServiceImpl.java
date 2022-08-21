@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 import football.worldcup.eceptions.MatchAlreadyExistException;
+import football.worldcup.eceptions.MatchNotExistException;
 import football.worldcup.model.FootballMatch;
 
 /**
@@ -43,6 +44,9 @@ public class FootballScoreboardServiceImpl<T extends FootballMatch> implements F
 
 	@Override
 	public void updateScore(T match) {
+		if(!matches.contains(match)) {
+    		throw new MatchNotExistException(match.getHomeTeam() + " VS " + match.getAwayTeam() + " match not exist.");
+    	}
 		int index =  matches.indexOf(match);
 		FootballMatch existMatch = matches.get(index);
 		Integer homeTeamScore = match.getHomeTeamScore();
