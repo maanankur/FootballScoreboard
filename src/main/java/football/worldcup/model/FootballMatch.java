@@ -82,4 +82,35 @@ public class FootballMatch{
 		// TODO Auto-generated method stub
 		return getHomeTeam() + " " + getHomeTeamScore() + " - " + getAwayTeam() + " " + getAwayTeamScore();
 	}
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((awayTeam == null) ? 0 : awayTeam.hashCode());
+		result = prime * result + ((homeTeam == null) ? 0 : homeTeam.hashCode());
+		return result;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		FootballMatch other = (FootballMatch) obj;
+		if (awayTeam == null) {
+			if (other.awayTeam != null)
+				return false;
+		} else if (!awayTeam.equalsIgnoreCase(other.awayTeam))
+			return false;
+		if (homeTeam == null) {
+			if (other.homeTeam != null)
+				return false;
+		} else if (!homeTeam.equalsIgnoreCase(other.homeTeam))
+			return false;
+		return true;
+	}
 }

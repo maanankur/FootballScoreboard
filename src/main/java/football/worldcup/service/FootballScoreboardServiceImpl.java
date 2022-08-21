@@ -30,7 +30,7 @@ public class FootballScoreboardServiceImpl<T extends FootballMatch> implements F
 	public void startNewGame(T match) {
 		String homeTeam = match.getHomeTeam();
     	String awayTeam = match.getAwayTeam();
-    	if(homeTeam == null || awayTeam == null || match.getHomeTeam().isBlank() || match.getAwayTeam().isBlank()) {
+    	if(homeTeam == null || awayTeam == null || match.getHomeTeam().isBlank() || match.getAwayTeam().isBlank() || matches.contains(match)) {
     		return;
     	}
     	matches.add(match);
