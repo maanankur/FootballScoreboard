@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import football.worldcup.eceptions.MatchAlreadyExistException;
 import football.worldcup.model.FootballMatch;
 
 /**
@@ -30,8 +31,11 @@ public class FootballScoreboardServiceImpl<T extends FootballMatch> implements F
 	public void startNewGame(T match) {
 		String homeTeam = match.getHomeTeam();
     	String awayTeam = match.getAwayTeam();
-    	if(homeTeam == null || awayTeam == null || match.getHomeTeam().isBlank() || match.getAwayTeam().isBlank() || matches.contains(match)) {
+    	if(homeTeam == null || awayTeam == null || match.getHomeTeam().isBlank() || match.getAwayTeam().isBlank()) {
     		return;
+    	}
+    	if(matches.contains(match)) {
+    		throw new MatchAlreadyExistException(match.getHomeTeam() + " VS " + match.getAwayTeam() + " match already exist.");
     	}
     	matches.add(match);
 	}

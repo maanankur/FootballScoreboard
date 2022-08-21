@@ -2,12 +2,15 @@ package hackerrank;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 
+import football.worldcup.eceptions.MatchAlreadyExistException;
 import football.worldcup.model.FootballMatch;
 import football.worldcup.service.FootballScoreboardServiceImpl;
 
@@ -53,9 +56,14 @@ public class FootballScorboardUnitTest {
 	@Test
 	public void _03_duplicateMatch() {
 		FootballMatch match = new FootballMatch("Mexico", "Canada");
-		footballService.startNewGame(match);
+		
+		Exception exception = assertThrows(MatchAlreadyExistException.class, () -> {
+			footballService.startNewGame(match);
+		});
 
-		assertEquals(1, footballService.getSummary().size());
+		String expectedMessage = match.getHomeTeam() + " VS " + match.getAwayTeam() + " match already exist.";
+		String actualMessage = exception.getMessage();
+		assertTrue(actualMessage.equals(expectedMessage));
 	}
 
 }
