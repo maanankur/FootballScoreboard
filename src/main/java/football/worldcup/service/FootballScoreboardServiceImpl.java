@@ -65,8 +65,10 @@ public class FootballScoreboardServiceImpl<T extends FootballMatch> implements F
 
 	@Override
 	public void finishInProgressGame(FootballMatch match) {
-		// TODO Auto-generated method stub
-		
+		if(!matches.contains(match)) {
+    		throw new MatchNotExistException(match.getHomeTeam() + " VS " + match.getAwayTeam() + " match not exist.");
+    	}
+		matches.remove(match);
 	}
 
 }

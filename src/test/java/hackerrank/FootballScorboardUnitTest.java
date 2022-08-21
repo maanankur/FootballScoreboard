@@ -181,4 +181,18 @@ public class FootballScorboardUnitTest {
 		assertEquals(5, footballService.getSummary().size());
 	}
 
+	/**
+	 * This is the test case to finish a in valid match 
+	 */
+	@Test
+	public void _12_finishInvalidMatch() {
+		FootballMatch match = new FootballMatch("India", "Pakistan");
+		Exception exception = assertThrows(MatchNotExistException.class, () -> {
+			footballService.finishInProgressGame(match);
+		});
+
+		String expectedMessage = match.getHomeTeam() + " VS " + match.getAwayTeam() + " match not exist.";
+		String actualMessage = exception.getMessage();
+		assertTrue(actualMessage.equals(expectedMessage));
+	}
 }
