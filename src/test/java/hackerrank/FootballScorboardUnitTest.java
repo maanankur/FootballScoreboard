@@ -7,7 +7,7 @@ import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 
-import football.worldcup.FootballMatch;
+import football.worldcup.model.FootballMatch;
 import football.worldcup.service.FootballScoreboardServiceImpl;
 
 /**
@@ -16,7 +16,7 @@ import football.worldcup.service.FootballScoreboardServiceImpl;
  */
 @TestMethodOrder(MethodOrderer.Alphanumeric.class)
 public class FootballScorboardUnitTest {
-	private static FootballScoreboardServiceImpl footballService;
+	private static FootballScoreboardServiceImpl<FootballMatch> footballService;
 
 	@BeforeAll
 	public static void instantiate() {
@@ -28,9 +28,11 @@ public class FootballScorboardUnitTest {
 	 */
 	@Test
 	public void _01_invalidMatch() {
-		footballService.startNewGame(null);
-		footballService.startNewGame(null);
-		assertEquals(0, footballService.getSummary().size());
+		FootballMatch m1 = new FootballMatch("", "Canada");
+		FootballMatch m2 = new FootballMatch(null, "Canada");
+		footballService.startNewGame(m1);
+		footballService.startNewGame(m2);
+		assertEquals(2, footballService.getSummary().size());
 	}
 
 }

@@ -4,11 +4,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import football.worldcup.model.FootballMatch;
+
 /**
  * This is the service implementation for football scoreboard
  * @author ankur.maan
  */
-public class FootballScoreboardServiceImpl<T> implements FootballScoreboardInterface<T> {
+public class FootballScoreboardServiceImpl<T extends FootballMatch> implements FootballScoreboardInterface<T> {
     
 
 
