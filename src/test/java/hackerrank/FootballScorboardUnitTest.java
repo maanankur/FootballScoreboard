@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.List;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
@@ -194,5 +196,22 @@ public class FootballScorboardUnitTest {
 		String expectedMessage = match.getHomeTeam() + " VS " + match.getAwayTeam() + " match not exist.";
 		String actualMessage = exception.getMessage();
 		assertTrue(actualMessage.equals(expectedMessage));
+	}
+	
+	/**
+	 * This is the test case to validate the desired order  
+	 */
+	@Test
+	public void _13_validateOrder() {
+		List<FootballMatch> matches = footballService.getSummary();
+		FootballMatch match = matches.get(0);
+		assertTrue(match.getHomeTeam().equals("Belgium"));
+		assertTrue(match.getAwayTeam().equals("Austrailia"));
+		assertEquals(13, match.getHomeTeamScore() + match.getAwayTeamScore());
+		
+		match = matches.get(matches.size() - 1);
+		assertTrue(match.getHomeTeam().equals("Mexico"));
+		assertTrue(match.getAwayTeam().equals("Canada"));
+		assertEquals(0, match.getHomeTeamScore() + match.getAwayTeamScore());
 	}
 }
