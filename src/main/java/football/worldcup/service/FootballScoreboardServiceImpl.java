@@ -42,8 +42,12 @@ public class FootballScoreboardServiceImpl<T extends FootballMatch> implements F
 
 	@Override
 	public void updateScore(T match) {
-		// TODO Auto-generated method stub
-		
+		int index =  matches.indexOf(match);
+		FootballMatch existMatch = matches.get(index);
+		Integer homeTeamScore = match.getHomeTeamScore();
+		Integer awayTeamScore = match.getAwayTeamScore();
+		existMatch.setHomeTeamScore(match.getHomeTeamScore());
+		existMatch.setAwayTeamScore(match.getAwayTeamScore());
 	}
 
 }
