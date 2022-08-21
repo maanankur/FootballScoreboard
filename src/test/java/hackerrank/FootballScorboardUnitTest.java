@@ -1,6 +1,7 @@
 package hackerrank;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.MethodOrderer;
@@ -42,6 +43,17 @@ public class FootballScorboardUnitTest {
 	public void _02_validMatch() {
 		FootballMatch m1 = new FootballMatch("Mexico", "Canada");
 		footballService.startNewGame(m1);
+
+		assertEquals(1, footballService.getSummary().size());
+	}
+	
+	/**
+	 * This is the test case for a match with duplicate home and away team name   
+	 */
+	@Test
+	public void _03_duplicateMatch() {
+		FootballMatch match = new FootballMatch("Mexico", "Canada");
+		footballService.startNewGame(match);
 
 		assertEquals(1, footballService.getSummary().size());
 	}
