@@ -32,7 +32,7 @@ public class FootballScorboardUnitTest {
 		FootballMatch m2 = new FootballMatch(null, "Canada");
 		footballService.startNewGame(m1);
 		footballService.startNewGame(m2);
-		assertEquals(2, footballService.getSummary().size());
+		assertEquals(0, footballService.getSummary().size());
 	}
 
 }
