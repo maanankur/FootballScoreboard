@@ -114,5 +114,20 @@ public class FootballScorboardUnitTest {
 		assertEquals((Integer)6, footballService.getSummary().get(0).getHomeTeamScore());
 		assertEquals((Integer)7, footballService.getSummary().get(0).getAwayTeamScore());
 	}
+	
+	/**
+	 * This is the test case to validate update scores for a invalid match 
+	 */
+	@Test
+	public void _08_updateInvalidMatch() {
+		FootballMatch match = new FootballMatch("Wales", "Denmark");
+		Exception exception = assertThrows(Exception.class, () -> {
+			footballService.updateScore(match);
+		});
 
+		String expectedMessage = match.getHomeTeam() + " VS " + match.getAwayTeam() + " match not exist.";
+		String actualMessage = exception.getMessage();
+		assertTrue(actualMessage.equals(expectedMessage));
+	}
+	
 }
