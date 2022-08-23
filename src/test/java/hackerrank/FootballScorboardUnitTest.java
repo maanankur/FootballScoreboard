@@ -21,7 +21,7 @@ import football.worldcup.service.FootballScoreboardServiceImpl;
  * This is the Junit class for football score-board service 
  * @author ankur.maan
  */
-@TestMethodOrder(MethodOrderer.Alphanumeric.class)
+@TestMethodOrder(MethodOrderer.DisplayName.class)
 public class FootballScorboardUnitTest {
 	private static FootballScoreboardServiceImpl<FootballMatch> footballService;
 
@@ -35,8 +35,8 @@ public class FootballScorboardUnitTest {
 	 */
 	@Test
 	public void _01_invalidMatch() {
-		FootballMatch m1 = new FootballMatch("", "Canada");
-		FootballMatch m2 = new FootballMatch(null, "Canada");
+		FootballMatch m1 = new FootballMatch.Builder("", "Canada").build();
+		FootballMatch m2 = new FootballMatch.Builder(null, "Canada").build();
 		footballService.startNewGame(m1);
 		footballService.startNewGame(m2);
 		assertEquals(0, footballService.getSummary().size());
@@ -47,7 +47,7 @@ public class FootballScorboardUnitTest {
 	 */
 	@Test
 	public void _02_validMatch() {
-		FootballMatch m1 = new FootballMatch("Mexico", "Canada");
+		FootballMatch m1 = new FootballMatch.Builder("Mexico", "Canada").build();
 		footballService.startNewGame(m1);
 
 		assertEquals(1, footballService.getSummary().size());
@@ -58,7 +58,7 @@ public class FootballScorboardUnitTest {
 	 */
 	@Test
 	public void _03_duplicateMatch() {
-		FootballMatch match = new FootballMatch("Mexico", "Canada");
+		FootballMatch match = new FootballMatch.Builder("Mexico", "Canada").build();
 		
 		Exception exception = assertThrows(MatchAlreadyExistException.class, () -> {
 			footballService.startNewGame(match);
@@ -74,8 +74,8 @@ public class FootballScorboardUnitTest {
 	 */
 	@Test
 	public void _04_validInvalidMatch() {
-		FootballMatch m1 = new FootballMatch("Itly", "Spain");
-		FootballMatch m2 = new FootballMatch(null, "Canada");
+		FootballMatch m1 = new FootballMatch.Builder("Itly", "Spain").build();
+		FootballMatch m2 = new FootballMatch.Builder(null, "Canada").build();
 		footballService.startNewGame(m1);
 		footballService.startNewGame(m2);
 
@@ -87,8 +87,8 @@ public class FootballScorboardUnitTest {
 	 */
 	@Test
 	public void _05_validValidMatch() {
-		FootballMatch m1 = new FootballMatch("France", "Germany");
-		FootballMatch m2 = new FootballMatch("England", "Portugal");
+		FootballMatch m1 = new FootballMatch.Builder("France", "Germany").build();
+		FootballMatch m2 = new FootballMatch.Builder("England", "Portugal").build();
 		footballService.startNewGame(m1);
 		footballService.startNewGame(m2);
 
@@ -109,10 +109,10 @@ public class FootballScorboardUnitTest {
 	 */
 	@Test
 	public void _07_updateValidMatch() {
-		FootballMatch m1 = new FootballMatch("Belgium", "Austrailia");
+		FootballMatch m1 = new FootballMatch.Builder("Belgium", "Austrailia").build();
 		footballService.startNewGame(m1);
 		assertEquals(5, footballService.getSummary().size());
-		FootballMatch m2 = new FootballMatch("Belgium", "Austrailia", 6 , 7);
+		FootballMatch m2 = new FootballMatch.Builder("Belgium", "Austrailia").setHomeTeamScore(6).setAwayTeamScore(7).build();
 		footballService.updateScore(m2);
 		assertEquals((Integer)6, footballService.getSummary().get(0).getHomeTeamScore());
 		assertEquals((Integer)7, footballService.getSummary().get(0).getAwayTeamScore());
@@ -123,7 +123,7 @@ public class FootballScorboardUnitTest {
 	 */
 	@Test
 	public void _08_updateInvalidMatch() {
-		FootballMatch match = new FootballMatch("Wales", "Denmark");
+		FootballMatch match = new FootballMatch.Builder("Wales", "Denmark").build();
 		Exception exception = assertThrows(MatchNotExistException.class, () -> {
 			footballService.updateScore(match);
 		});
@@ -139,7 +139,7 @@ public class FootballScorboardUnitTest {
 	@Test
 	public void _09_updateInvalidScores() {
 		String expectedMessage = "Invalid Scores to update";
-		FootballMatch m1 = new FootballMatch("Mexico", "Canada", null, 5);
+		FootballMatch m1 = new FootballMatch.Builder("Mexico", "Canada").setHomeTeamScore(null).setAwayTeamScore(5).build();
 		Exception exception = assertThrows(InvalidScoreException.class, () -> {
 			footballService.updateScore(m1);
 		});
@@ -147,7 +147,7 @@ public class FootballScorboardUnitTest {
 		String actualMessage = exception.getMessage();
 		assertTrue(actualMessage.equals(expectedMessage));
 		
-		FootballMatch m2 = new FootballMatch("Mexico", "Canada", -2, 5);
+		FootballMatch m2 = new FootballMatch.Builder("Mexico", "Canada").setHomeTeamScore(-2).setAwayTeamScore(5).build();
 		exception = assertThrows(InvalidScoreException.class, () -> {
 			footballService.updateScore(m2);
 		});
@@ -162,7 +162,7 @@ public class FootballScorboardUnitTest {
 	@Test
 	public void _10_updateNonAscendingScores() {
 		String expectedMessage = "Scores can not be decrease";
-		FootballMatch m1 = new FootballMatch("Belgium", "Austrailia", 4, 5);
+		FootballMatch m1 = new FootballMatch.Builder("Belgium", "Austrailia").setHomeTeamScore(4).setAwayTeamScore(5).build();
 		Exception exception = assertThrows(InvalidScoreException.class, () -> {
 			footballService.updateScore(m1);
 		});
@@ -176,7 +176,7 @@ public class FootballScorboardUnitTest {
 	 */
 	@Test
 	public void _11_finishMatch() {
-		FootballMatch m1 = new FootballMatch("Uruguay", "Brazil");
+		FootballMatch m1 = new FootballMatch.Builder("Uruguay", "Brazil").build();
 		footballService.startNewGame(m1);
 		assertEquals(6, footballService.getSummary().size());
 		footballService.finishInProgressGame(m1);
@@ -188,7 +188,7 @@ public class FootballScorboardUnitTest {
 	 */
 	@Test
 	public void _12_finishInvalidMatch() {
-		FootballMatch match = new FootballMatch("India", "Pakistan");
+		FootballMatch match = new FootballMatch.Builder("India", "Pakistan").build();
 		Exception exception = assertThrows(MatchNotExistException.class, () -> {
 			footballService.finishInProgressGame(match);
 		});
